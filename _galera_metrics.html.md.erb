@@ -7,3 +7,6 @@
 | `<%= vars.mysql_metrics_origin %>/galera/wsrep_local_send_queue_avg` | Shows the average size of the local sent queue since the last status query. | float |
 | `<%= vars.mysql_metrics_origin %>/galera/wsrep_local_index` | This node index in the cluster (base 0). | int |
 | `<%= vars.mysql_metrics_origin %>/galera/wsrep_local_state` | This is the node's local state | int |
+| `<%= vars.mysql_metrics_origin %>/galera/wsrep_flow_control_paused` | Time since the last status query that was paused due to flow control. | float |
+| `<%= vars.mysql_metrics_origin %>/galera/wsrep_flow_control_sent` | Number of FC_PAUSE events sent by this node since the last status query. | int |
+| `<%= vars.mysql_metrics_origin %>/galera/wsrep_flow_control_received` | Number of FC_PAUSE events received by this node since the last status query. | int |
