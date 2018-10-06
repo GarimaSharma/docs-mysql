@@ -21,10 +21,17 @@ Contact your operator to check if the leader VM is read-only.
 For more information about troubleshooting this problem, see 
 [Both Leader and Follower Instances Are Read-Only](./troubleshoot.html#both-read-only).
 
-If your apps can no longer write or read to the database, bind, unbind, or update service instances, your persistent disk might be full. 
+### <a id="disk-full"></a>Persistent Disk is Full
+
+If your persistent disk is full, your apps become inoperable. In this state, read, 
+write, and Cloud Foundry Command-Line Interface (cf CLI) opertations do not work. 
+
 Contact your operator to check if your persistent disk is full.
 For more information about troubleshooting this problem, see 
-[Persistent Disk is Full](./troubleshoot.html#persistent-disk).
+[Persistent Disk is Full](./troubleshoot.html#persistent-disk). 
+
+
+<!-- switch the clause in first sentence -->
 
 ## <a id="errors"></a> Troubleshoot Errors
 
