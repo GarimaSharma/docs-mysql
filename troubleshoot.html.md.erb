@@ -310,63 +310,68 @@ write, and Cloud Foundry Command-Line Interface (cf CLI) operations do not work.
 <h4>Symptom</h4>
 
 Developers report that read, write, and Cloud Foundry Command-Line Interface (cf CLI) 
-operations do not work.  Also, developers cannot upgrade to a larger MySQL service plan.
+operations do not work.  Developers cannot upgrade to a larger MySQL service plan to free up disk space.
 
 <h4>Explanation</h4>
 
-This problem happens if your persistent disk is full. When you use the BOSH CLI to target the deployment and look at the instances, you'll see the instances are at 100% usage. 
-
-<!-- OVERVIEW OF PROCEDURE -->
+This problem happens if your persistent disk is full. When you use the BOSH CLI to target the deployment, you see the instances are at 100% usage. Available disk space can be increased by deleting audit log files. You can then upgrade your MySQL service plan to increase the available disk space more. 
 
 <h4>Solution</h4>
-
-1. To target the BOSH deployment associated with your service instance, run the
+<ol>
+  <li> To target the BOSH deployment associated with your service instance, run the
 following command: 
+<br>
 
-`cf service SERVICE-INSTANCE-NAME --guid` <!-- to find the GUID associated with your service instance -->
-
-Where `SERVICE-INSTANCE-NAME` is the name of your service instance
-
-<!-- EXAMPLE OUPUT -->
-
-1. Record the GUID.
-
-1. To confirm that your persistent disk usage is at 100%, run the following command:
-`bosh -d SERVICE-INSTANCE-GUID instances --vitals`
-
-Where `SERVICE-INSTANCE-GUID` is the GUID you recorded in the previous step.
+<code>cf service SERVICE-INSTANCE-NAME --guid</code> <!-- to find the GUID associated with your service instance -->
+<br>
+Where <code>SERVICE-INSTANCE-NAME</code> is the name of your service instance
 
 <!-- EXAMPLE OUPUT -->
+  </li>
+  <li> Record the GUID. </li>
 
-1. Record instance ID
-<!-- FOLLOW-UP:  What do you do if not L-F? Just the above? exclusive?-->
-If you are using a Leader-Follower topology, to find the instance ID, run the 
-following command:
-`bosh -d SERVICE-INSTANCE-GUID run-errand inspect`
+  <li> To confirm that your persistent disk usage is at 100%, run the following command:
+  <br>
+  <code>bosh -d SERVICE-INSTANCE-GUID instances --vitals</code>
+  <br>
+  Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.
 
-<!-- EXAMPLE OUPUT -->
+  <!-- EXAMPLE OUPUT -->
+  </li>
+  
+  <li> Record instance ID
+  <!-- FOLLOW-UP:  What do you do if not L-F? Just the above? exclusive?-->
+  If you are using a Leader-Follower topology, to find the instance ID, run the 
+  following command:
+  <br>
+  <code>bosh -d SERVICE-INSTANCE-GUID run-errand inspect</code>
 
-2. To BOSH SSH into your service instances, run the following command:
+  <!-- EXAMPLE OUPUT -->
+  </li>
 
-`bosh -d DEPLOYMENT-NAME ssh mysql/INSTANCE-ID`
-
-Where: 
+  <li> To BOSH SSH into your service instances, run the following command:
+  <br>
+  <code>bosh -d DEPLOYMENT-NAME ssh mysql/INSTANCE-ID</code>
+  <br>
+  Where: 
+  <br>
 <!-- Where do they find this?    -->
-+ `DEPLOYMENT-NAME` is the name of your deployment 
-+ `INSTANCE-ID` is the instance ID you recorded in the previous step
+  <ul> 
+    <li> <code>DEPLOYMENT-NAME</code> is the name of your deployment </li>
+    <li> <code>INSTANCE-ID</code> is the instance ID you recorded in the previous step </li>
+  </ul>
+  <br>
+  <li> To move to the directory where your audit log files are located, run the 
+  following command:  
+  <br>
+  <code>cd /var/vcap/sys/log/mysql/mysql-audit-log</code>
+  </li>
+  <li> Delete at least one audit log file with <code>rm</code> </li>
 
-3. To move to the directory where your audit log files are located, run the 
-following command:  
+  <li> Exit from BOSH SSH </li>
 
-`cd /var/vcap/sys/log/mysql/mysql-audit-log` 
-
-4. Delete at least one audit log file with `rm`
-
-5. Exit from BOSH SSH
-
-6. Update your service instance to a larger plan. For more information, see [Update a Service Instance to a Larger Plan](https://docs.pivotal.io/p-mysql/2-4/use.html#update)
-
-
+  <li> Update your service instance to a larger plan. For more information, see <a href= "https://docs.pivotal.io/p-mysql/2-4/use.html#update">Update a Service Instance to a Larger Plan</a> </li>
+  
 <a id="components"></a><h2>Troubleshooting Components</h2>
 
 This section provides guidance on checking for and fixing issues in on-demand service components.
