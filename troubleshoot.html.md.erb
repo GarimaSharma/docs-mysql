@@ -16,6 +16,7 @@ In this topic:
     * [Unable to Determine Leader and Follower (Errand Error)](#unable-to-determine)
     * [Both Leader and Follower Instances Are Writable (Errand Error)](#both-writable)
     * [Both Leader and Follower Instances Are Read-Only](#both-read-only)
+    * [Persistent Disk is Full](#persistent-disk)
 * [Troubleshooting Components](#components)
     * [BOSH Problems](#bosh)
     * [Configuration](#bosh-config)
@@ -314,7 +315,7 @@ operations do not work.  Developers cannot upgrade to a larger MySQL service pla
 
 <h4>Explanation</h4>
 
-This problem happens if your persistent disk is full. When you use the BOSH CLI to target the deployment, you see the instances are at 100% persistent disk usage. Available disk space can be increased by deleting audit log files. You can then upgrade your MySQL service plan to increase the available disk space more. 
+This problem happens if your persistent disk is full. If you use the BOSH CLI to target your deployment, you see that the instances are at 100% persistent disk usage. Available disk space can be increased by deleting audit log files. After deleting audit logs, you can then upgrade to a larger MySQL service plan. 
 
 <h4>Solution</h4>
 <ol>
@@ -322,9 +323,9 @@ This problem happens if your persistent disk is full. When you use the BOSH CLI 
     following command: 
     <br>
     <code>cf service SERVICE-INSTANCE-NAME --guid</code> 
-    <br>
-    Where <code>SERVICE-INSTANCE-NAME</code> is the name of your service instance
-    <br>
+    <br><br>
+    Where <code>SERVICE-INSTANCE-NAME</code> is the name of your service instance.
+    <br><br>
     For example:
     <pre class="terminal">$ cf service my-service-instance --guid
     12345678-90ab-cdef-1234-567890abcdef</pre>
@@ -336,11 +337,12 @@ This problem happens if your persistent disk is full. When you use the BOSH CLI 
    
    <li>From the Ops Manager VM, log in to your BOSH Director with the BOSH CLI.
    See <a href="https://docs.pivotal.io/pivotalcf/customizing/trouble-advanced.html#log-in">Log in to the BOSH Director </a>in <em>Advanced Troubleshooting with the BOSH CLI</em>. </li> -->
-  
+   
+  <!-- Should this be bosh2 -->
   <li> To confirm that your persistent disk usage is at 100%, run the following command:
     <br>
-    <code>bosh2 -d SERVICE-INSTANCE-GUID instances --vitals</code> <!-- Should this be bosh2 -->
-    <br>
+    <code>bosh2 -d SERVICE-INSTANCE-GUID instances --vitals</code> 
+    <br><br>
     Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.
 
   <!-- EXAMPLE OUPUT -->
@@ -352,9 +354,10 @@ This problem happens if your persistent disk is full. When you use the BOSH CLI 
   following command:
   <br>
   <code>bosh -d SERVICE-INSTANCE-GUID run-errand inspect</code>
-  <br>
+  <br><br>
   For example:
   <pre class="terminal">
+  $ bosh -d SERVICE-INSTANCE-GUID run-errand inspect
   Instance   mysql/ca0ed8b5-7590-4cde-bba8-7ca2935f2bd0
   Exit Code  0
   Stdout     2018/04/03 18:08:46 Started executing command: inspect
@@ -394,7 +397,7 @@ This problem happens if your persistent disk is full. When you use the BOSH CLI 
   <li> To BOSH SSH into your service instances, run the following command:
   <br>
   <code>bosh -d DEPLOYMENT-NAME ssh mysql/INSTANCE-ID</code>
-  <br>
+  <br><br>
   Where: 
   <br>
 <!-- Where do they find deployment name? -->
@@ -402,7 +405,6 @@ This problem happens if your persistent disk is full. When you use the BOSH CLI 
     <li> <code>DEPLOYMENT-NAME</code> is the name of your deployment </li>
     <li> <code>INSTANCE-ID</code> is the instance ID you recorded in the previous step </li>
   </ul>
-  <br>
   <li> To move to the directory where your audit log files are located, run the 
   following command:  
   <br>
