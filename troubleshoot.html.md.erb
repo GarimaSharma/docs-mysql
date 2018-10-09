@@ -332,13 +332,15 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
     If you do not know the name of the service instance, you can list service instances in the space with <code>cf services</code>.  
   </li>
   
-  <!-- <li> Perform the steps in <a      href="https://docs.pivotal.io/pivotalcf/customizing/trouble-advanced.html#gather"> Gather Credential and IP  Address Information </a> and <a href="https://docs.pivotal.io/pivotalcf/customizing/trouble-advanced.html#ssh">SSH into Ops Manager </a>of
+  <!-- Follow up: Are the procedures in these topics relevant/correct for SSH and Logging into BOSH Director in this context:
+  
+  <li> Perform the steps in <a href="https://docs.pivotal.io/pivotalcf/customizing/trouble-advanced.html#gather"> Gather Credential and IP  Address Information </a> and <a href="https://docs.pivotal.io/pivotalcf/customizing/trouble-advanced.html#ssh">SSH into Ops Manager </a>of
    <em>Advanced Troubleshooting with the BOSH CLI</em> to SSH into the Ops Manager VM. </li>
    
    <li>From the Ops Manager VM, log in to your BOSH Director with the BOSH CLI.
    See <a href="https://docs.pivotal.io/pivotalcf/customizing/trouble-advanced.html#log-in">Log in to the BOSH Director </a>in <em>Advanced Troubleshooting with the BOSH CLI</em>. </li> -->
    
-  <!-- Should this be bosh2 -->
+  <!-- Follow Up: Should the command be bosh2 or bosh  -->
   <li> To confirm that your persistent disk usage is at 100%, run the following command:
     <br>
     <code>bosh2 -d SERVICE-INSTANCE-GUID instances --vitals</code> 
@@ -349,7 +351,7 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
   </li>
   
   <li> 
-  <!-- FOLLOW-UP:  What do you do if not L-F? Just the above? exclusive?-->
+  <!-- Follow Up:  Is there a procedure for retrieving the instance ID for single node? Or does the above command cover that?-->
   If you are using leader-follower MySQL VMs, to retrieve and record the instance ID, run the 
   following command:
   <br>
@@ -393,7 +395,7 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
    In the above output, the instance ID of the leader VM is <code>ca0ed8b5-7590-4cde-bba8-7ca2935f2bd0</code>.
   </li>
   
-  <!-- Do the above links do the same thing? -->
+  <!-- Do the above links to procedures do the same thing as the following? -->
   <li> To BOSH SSH into your service instances, run the following command:
   <br>
   <code>bosh -d DEPLOYMENT-NAME ssh mysql/INSTANCE-ID</code>
