@@ -329,28 +329,51 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
     For example:
     <pre class="terminal">$ cf service my-service-instance --guid
     12345678-90ab-cdef-1234-567890abcdef</pre>
-    If you do not know the name of the service instance, you can list service instances in the space with <code>cf services</code>.  
+    If you do not know the name of the service instance, you can list service instances in the space with <code>cf services</code>.</pre>
   </li>
   
   <li> To confirm that your persistent disk usage is at 100%, run the following command:
     <br>
-    <code>bosh -d SERVICE-INSTANCE-GUID instances --vitals</code> 
+    <code>bosh -d service-instance_SERVICE-INSTANCE-GUID instances --vitals</code> 
     <br><br>
-    Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.
-
-  <!-- EXAMPLE OUPUT -->
+    Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.<br>
+      
   </li>
   
   <li> 
-  <!-- Follow Up:  Is there a procedure for retrieving the instance ID for single node? Or does the above command cover that?-->
+    If you are using single node MySQL VMs, to retrieve and record the instance ID, run the 
+    following command:
+    <br>
+    <code>bosh -d service-instance_SERVICE-INSTANCE-GUID instances</code>
+    <br>
+    Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.<br>
+    <br>
+    For example:
+    <pre class="terminal">$ bosh -d service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf instances<br>
+      Using environment '35.227.154.142' as client 'admin'<br><br>
+
+      Task 204. Done<br><br>
+
+      Deployment 'service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf'<br><br>
+
+      Instance                                    Process State  AZ  IPs <br>
+      mysql/d15419ba-fc6c-4013-b056-19f91c6b0f1d  running        z2  10.244.17.3<br><br>
+
+      1 instances<br><br>
+
+      Succeeded
+    </pre>
+    
   If you are using leader-follower MySQL VMs, to retrieve and record the instance ID, run the 
   following command:
   <br>
-  <code>bosh -d SERVICE-INSTANCE-GUID run-errand inspect</code>
-  <br><br>
+  <code>bosh -d service-instance_SERVICE-INSTANCE-GUID run-errand inspect</code>
+  <br>
+  Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.<br>
+  <br>
   For example:
   <pre class="terminal">
-  $ bosh -d SERVICE-INSTANCE-GUID run-errand inspect
+  $ bosh -d service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf run-errand inspect
   Instance   mysql/ca0ed8b5-7590-4cde-bba8-7ca2935f2bd0
   Exit Code  0
   Stdout     2018/04/03 18:08:46 Started executing command: inspect
