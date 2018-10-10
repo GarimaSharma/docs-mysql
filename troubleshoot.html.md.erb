@@ -311,15 +311,19 @@ write, and Cloud Foundry Command-Line Interface (cf CLI) operations do not work.
 <h4>Symptom</h4>
 
 Developers report that read, write, and Cloud Foundry Command-Line Interface (cf CLI) 
-operations do not work.  Developers cannot upgrade to a larger MySQL service plan to free up disk space.
+operations do not work.  Developers cannot upgrade to a larger MySQL service 
+plan to free up disk space.
 
 <h4>Explanation</h4>
 
-This problem happens if your persistent disk is full. If you use the BOSH CLI to target your deployment, you see that the instances are at 100% persistent disk usage. Available disk space can be increased by deleting audit log files. After deleting audit logs, you can then upgrade to a larger MySQL service plan. 
+This problem happens if your persistent disk is full. If you use the BOSH CLI to 
+target your deployment, you see that the instances are at 100% persistent disk 
+usage. Available disk space can be increased by deleting audit log files. 
+After deleting audit logs, you can then upgrade to a larger MySQL service plan. 
 
 <h4>Solution</h4>
 <ol>
-  <li> To retrieve and record the GUID of the service instance , run the
+  <li> To retrieve and record the GUID of your service instance , run the
     following command: 
     <br>
     <code>cf service SERVICE-INSTANCE-NAME --guid</code> 
@@ -329,29 +333,37 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
     For example:
     <pre class="terminal">$ cf service my-service-instance --guid
     12345678-90ab-cdef-1234-567890abcdef</pre>
-    If you do not know the name of the service instance, you can list service instances in the space with <code>cf services</code>.</pre>
+    If you do not know the name of your service instance, you can list service 
+    instances in the space with <code>cf services</code>.</pre>
   </li>
   
-  <li> To confirm that your persistent disk usage is at 100%, run the following command:
+  <li> To confirm that your persistent disk usage is at 100%, run the following 
+    command:
     <br>
     <code>bosh -d service-instance_SERVICE-INSTANCE-GUID instances --vitals</code> 
     <br><br>
-    Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.<br>
+    Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the 
+    previous step.<br>
       
   </li>
   
   <li> 
+    To retrieve and record the instance ID of your service instance, follow the 
+    procedure below that correponds with your VM topology.
     <ul>
-    <li>If you are using single node MySQL VMs, to retrieve and record the instance ID, run the 
+    <li>If you are using single node MySQL VMs, to retrieve and record the 
+      instance ID, run the 
     following command:
     <br>
     <code>bosh -d service-instance_SERVICE-INSTANCE-GUID instances</code>
     <br><br>
-    Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.<br>
+    Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the 
+    step one.<br>
     <br>
     For example:
-    <pre class="terminal">$ bosh -d service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf instances
-      Using environment '35.227.154.142' as client 'admin'
+    <pre class="terminal">$ bosh -d service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf 
+      instances
+      Using environment '34.237.123.534' as client 'admin'
 
       Task 204. Done
 
@@ -364,14 +376,19 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
 
       Succeeded
     </pre>
-  <br>  
+  
+  The instance ID, which is the value for <code>Instance</code> after <code>mysql/</code>.
+  In the above output, the instance ID of the leader VM is <code>d15419ba-fc6c-4013-b056-19f91c6b0f1d</code>.
+  <br><br>
 </li>
-  <li>If you are using leader-follower MySQL VMs, to retrieve and record the instance ID, run the 
+  <li>If you are using leader-follower MySQL VMs, to retrieve and record the 
+    instance ID, run the 
   following command:
   <br>
   <code>bosh -d service-instance_SERVICE-INSTANCE-GUID run-errand inspect</code>
   <br><br>
-  Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.<br>
+  Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the 
+  step one.<br>
   <br>
   For example:
   <pre class="terminal">
@@ -404,7 +421,8 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
             2018/04/03 18:08:46 Successfully executed command: inspect  
   </pre>
    Identify the instance marked <code>Role: leader</code>.
-   Record the instance ID, which is the value for <code>Instance</code> after <code>mysql/</code>.
+   Record the instance ID, which is the value for <code>Instance</code> 
+   after <code>mysql/</code>.
    In the above output, the instance ID of the leader VM is <code>ca0ed8b5-7590-4cde-bba8-7ca2935f2bd0</code>.
  </li>
 </ul>
@@ -412,14 +430,16 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
   
   <li> To BOSH SSH into your service instances, run the following command:
   <br>
-  <code>bosh -d DEPLOYMENT-NAME ssh mysql/INSTANCE-ID</code>
+  <code>bosh -d service-instance_SERVICE-INSTANCE-GUID ssh mysql/INSTANCE-ID</code>
   <br><br>
   Where: 
   <br>
-<!-- Where do they find deployment name? -->
   <ul> 
-    <li> <code>DEPLOYMENT-NAME</code> is the name of your deployment </li>
-    <li> <code>INSTANCE-ID</code> is the instance ID you recorded in the previous step </li>
+    <li> <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in 
+      the step one.</li>
+    <li> <code>INSTANCE-ID</code> is the instance ID you recorded in the 
+      previous step </li>
+    <br>
   </ul>
   <li> To move to the directory where your audit log files are located, run the 
   following command:  
@@ -428,9 +448,8 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
   </li>
   <li> Delete at least one audit log file with <code>rm</code> </li>
 
-  <li> Exit from BOSH SSH </li>
-
-  <li> Update your service instance to a larger plan. For more information, see <a href= "https://docs.pivotal.io/p-mysql/2-4/use.html#update">Update a Service Instance to a Larger Plan</a> </li>
+  <li> Update your service instance to a larger plan. For more information, 
+    see <a href= "https://docs.pivotal.io/p-mysql/2-4/use.html#update">Update a Service Instance to a Larger Plan</a> </li>
   
 <a id="components"></a><h2>Troubleshooting Components</h2>
 
