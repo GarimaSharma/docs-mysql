@@ -341,34 +341,36 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
   </li>
   
   <li> 
-    If you are using single node MySQL VMs, to retrieve and record the instance ID, run the 
+    <ul>
+    <li>If you are using single node MySQL VMs, to retrieve and record the instance ID, run the 
     following command:
     <br>
     <code>bosh -d service-instance_SERVICE-INSTANCE-GUID instances</code>
-    <br>
+    <br><br>
     Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.<br>
     <br>
     For example:
-    <pre class="terminal">$ bosh -d service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf instances<br>
-      Using environment '35.227.154.142' as client 'admin'<br><br>
+    <pre class="terminal">$ bosh -d service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf instances
+      Using environment '35.227.154.142' as client 'admin'
 
-      Task 204. Done<br><br>
+      Task 204. Done
 
-      Deployment 'service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf'<br><br>
+      Deployment 'service-instance_8b94fd28-b4f4-45g2-dhs5-7dsd018d5hf'
 
-      Instance                                    Process State  AZ  IPs <br>
-      mysql/d15419ba-fc6c-4013-b056-19f91c6b0f1d  running        z2  10.244.17.3<br><br>
+      Instance                                    Process State  AZ  IPs 
+      mysql/d15419ba-fc6c-4013-b056-19f91c6b0f1d  running        z2  10.244.17.3
 
-      1 instances<br><br>
+      1 instances
 
       Succeeded
     </pre>
-    
-  If you are using leader-follower MySQL VMs, to retrieve and record the instance ID, run the 
+  <br>  
+</li>
+  <li>If you are using leader-follower MySQL VMs, to retrieve and record the instance ID, run the 
   following command:
   <br>
   <code>bosh -d service-instance_SERVICE-INSTANCE-GUID run-errand inspect</code>
-  <br>
+  <br><br>
   Where <code>SERVICE-INSTANCE-GUID</code> is the GUID you recorded in the previous step.<br>
   <br>
   For example:
@@ -401,12 +403,11 @@ This problem happens if your persistent disk is full. If you use the BOSH CLI to
             GTID Executed: 82ddc607-710a-404e-b1b8-a7e3ea7ec063:1-18
             2018/04/03 18:08:46 Successfully executed command: inspect  
   </pre>
-  </li>
-  
-  <li>
    Identify the instance marked <code>Role: leader</code>.
    Record the instance ID, which is the value for <code>Instance</code> after <code>mysql/</code>.
    In the above output, the instance ID of the leader VM is <code>ca0ed8b5-7590-4cde-bba8-7ca2935f2bd0</code>.
+ </li>
+</ul>
   </li>
   
   <li> To BOSH SSH into your service instances, run the following command:
