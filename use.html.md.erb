@@ -369,16 +369,24 @@ $ cf install-plugin -r "CF-Community" mysql-plugin
 For more information, see the [cf-mysql-plugin](https://github.com/andreasf/cf-mysql-plugin) repository.
 
 ### <a id="desktop"></a>Desktop Tools
+
 On-demand services networks can be routable from outside networks if so desired. 
 Operators can directly access data service instance VMs by using tools such as 
 pgAdmin or MySQL Workbench, as long as they hold the corresponding credentials 
-or service keys. If you want to access the … instance with a tool like MySQL workbench (or whatever), your service VMs must be on a routable network…
+or service keys. 
+
+They can use an SSH tunnel or, if their network allows, a direct connection. 
+https://docs.pivotal.io/pivotalcf/2-3/devguide/deploy-apps/ssh-services.html
+
+To connect to your MySQL for PCF databases, a tool like MySQL Workbench  your service VMs 
+must be on a routable network.
  
+ procedure
 + Ops Manager IP address
 + Ops Manager creds
 + MySQL Server Proxy IP Address
 + Credentials for the MySQL database
-+ Configure connection
++ Configure connection in Desktop Tool
 
 ## <a id="example-app"></a>Example App
 
