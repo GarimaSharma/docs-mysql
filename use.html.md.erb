@@ -369,15 +369,16 @@ $ cf install-plugin -r "CF-Community" mysql-plugin
 For more information, see the [cf-mysql-plugin](https://github.com/andreasf/cf-mysql-plugin) repository.
 
 ### <a id="desktop"></a>Desktop Tools
-
-+ On-demand services networks can be routable from outside networks if so desired.
-+ Operators can directly access data service instance VMs by using tools such as 
+On-demand services networks can be routable from outside networks if so desired. 
+Operators can directly access data service instance VMs by using tools such as 
 pgAdmin or MySQL Workbench, as long as they hold the corresponding credentials 
-or service keys.  
-+ Link out to a "Data Services" ref arch or HOW to with a specific solution 
-would be good. Pair with C[0] on this. 
-+ "If you want to access the … instance with a tool like MySQL workbench (or whatever), your service VMs must be on a routable network…"
-+ The on-demand services network is routable from any IP address from inside of the company’s firewall. 
+or service keys. If you want to access the … instance with a tool like MySQL workbench (or whatever), your service VMs must be on a routable network…
+ 
++ Ops Manager IP address
++ Ops Manager creds
++ MySQL Server Proxy IP Address
++ Credentials for the MySQL database
++ Configure connection
 
 ## <a id="example-app"></a>Example App
 
