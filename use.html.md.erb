@@ -375,14 +375,15 @@ the credentials associated with your MySQL service instance.
 
 To connect your databases to a tool, such as MySQL Workbench, do the following:
 
-<!-- The first step is based on a old blog post for v1. We need an updated procedure. -->
+<!-- The first step is based on a old blog post for v1. We need an updated procedure. 
+For example MySQL Server Proxy IP Address is not a thing in v2.4-->
 1. Confirm you have the following: 
     * Ops Manager IP address, see []()
     * Ops Manager credentials, see [ ]()
     * MySQL Server Proxy IP Address []()
     * Credentials for the MySQL database[]()
 
-2. Configure your connection in your desktop tool in one of two ways: 
+1. Configure your connection in your desktop tool in one of two ways: 
     * Using an SSH tunnel. For information, see 
     [Accessing Services with SSH](https://docs.pivotal.io/pivotalcf/2-3/devguide/deploy-apps/ssh-services.html).
     * Using a direct connection on a routable network.
