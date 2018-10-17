@@ -381,31 +381,29 @@ To connect your databases to a desktop tool do the following:
 1. To retrieve the credentials from your MySQL service instance service key, run the following 
 command:
 
-  ```
-  cf service-key SERVICE-INSTANCE MYSQL-SERVICE-KEY
-  ```
-  Where: 
-    * `SERVICE-INSTANCE` is the name of your service instance.
-    * `KEY-NAME` is the name of your service key.
+    ```
+    cf service-key SERVICE-INSTANCE MYSQL-SERVICE-KEY
+    ```
+    Where:   
+      * `SERVICE-INSTANCE` is the name of your service instance.
+      * `KEY-NAME` is the name of your service key.
   
   For example:
   
   <pre class="terminal">
-    $ cf service-key mydb mykey1
-
+    $ cf service-key mydb mykey1<br>
     {
       "hostname": "99.99.99.9",
-      "jdbcUrl": "jdbc:mysql://99.99.99.9:3306/cf_e2d148a8_1baa_4961_b314_2431f57037e5?user=abcdefghijklm\u0026password=123456789",
-      "name": "cf_e2d148a8_1baa_4961_b314_2431f57037e5",
+      "jdbcUrl": "jdbc:mysql://99.99.99.9:3306/cf\_e2d148a8\_1baa\_4961\_b314\_2431f57037e5?user=abcdefghijklm\u0026password=123456789",
+      "name": "cf\_e2d148a8\_1baa\_4961\_b314\_2431f57037e5",
       "password": "123456789",
       "port": 3306,
-      "uri": "mysql://abcdefghijklm:123456789@99.99.99.9:3306/cf_e2d148a8_1baa_4961_b314_2431f57037e5?reconnect=true",
+      "uri": "mysql://abcdefghijklm:123456789<span>@</span>99.99.99.9:3306/cf\_e2d148a8\_1baa\_4961\_b314\_2431f57037e5?reconnect=true",
       "username": "abcdefghijklm"
     }
   </pre>  
   
-1. Record the values for the following:
-
+1. Record the values for the following:  
     * `hostname`
     * `name`
     * `password`
@@ -415,8 +413,7 @@ command:
 1. Configure an SSH tunnel using the values for `hostname` and `port` that you recorded in the above 
 step. For information on confguring an SSH tunnel, see [Configure Your SSH Tunnel](https://docs.pivotal.io/pivotalcf/2-3/devguide/deploy-apps/ssh-services.html#ssh-tunnel).
     
-1. Configure a connection in your desktop tool using the values for `hostname`, `name, `password`
-`port`, and `username` that you recorded in the above step. 
+1. Configure a connection in your desktop tool using the values for `hostname`, `name`, `password`, `port`, and `username` that you recorded in the above step. 
 
 ## <a id="example-app"></a>Example App
 
