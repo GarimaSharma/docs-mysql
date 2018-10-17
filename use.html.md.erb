@@ -370,23 +370,53 @@ For more information, see the [cf-mysql-plugin](https://github.com/andreasf/cf-m
 
 ### <a id="desktop"></a> Using Desktop Tools
 
-You can connect your MySQL for PCF databases to a third-party desktop tool, if you have
-the credentials associated with your MySQL service instance. 
+You can connect your MySQL for PCF databases to a desktop tool, such as MySQL Workbench 
+or Sequel Pro, if you have the credentials for your MySQL service instance. 
 
-To connect your databases to a tool, such as MySQL Workbench, do the following:
+If you do not have credentials for your MySQL service instance, follow the procedure in 
+[Create Read-only Access Credentials](../customize-access.html).
 
-<!-- The first step is based on a old blog post for v1. We need an updated procedure. 
-For example MySQL Server Proxy IP Address is not a thing in v2.4-->
-1. Confirm you have the following: 
-    * Ops Manager IP address, see []()
-    * Ops Manager credentials, see [ ]()
-    * MySQL Server Proxy IP Address []()
-    * Credentials for the MySQL database[]()
+To connect your databases to a desktop tool do the following:
+    
+1. To retrieve the credentials from your MySQL service instance service key, run the following 
+command:
 
-1. Configure your connection in your desktop tool in one of two ways: 
-    * Using an SSH tunnel. For information, see 
-    [Accessing Services with SSH](https://docs.pivotal.io/pivotalcf/2-3/devguide/deploy-apps/ssh-services.html).
-    * Using a direct connection on a routable network.
+  ```
+  cf service-key SERVICE-INSTANCE MYSQL-SERVICE-KEY
+  ```
+  Where: 
+    * `SERVICE-INSTANCE` is the name of your service instance.
+    * `KEY-NAME` is the name of your service key.
+  
+  For example:
+  
+  <pre class="terminal">
+    $ cf service-key mydb mykey1
+
+    {
+      "hostname": "99.99.99.9",
+      "jdbcUrl": "jdbc:mysql://99.99.99.9:3306/cf_e2d148a8_1baa_4961_b314_2431f57037e5?user=abcdefghijklm\u0026password=123456789",
+      "name": "cf_e2d148a8_1baa_4961_b314_2431f57037e5",
+      "password": "123456789",
+      "port": 3306,
+      "uri": "mysql://abcdefghijklm:123456789@99.99.99.9:3306/cf_e2d148a8_1baa_4961_b314_2431f57037e5?reconnect=true",
+      "username": "abcdefghijklm"
+    }
+  </pre>  
+  
+1. Record the values for the following:
+
+    * `hostname`
+    * `name`
+    * `password`
+    * `port`
+    * `username`
+    
+1. Configure an SSH tunnel using the values for `hostname` and `port` that you recorded in the above 
+step. For information on confguring an SSH tunnel, see [Configure Your SSH Tunnel](https://docs.pivotal.io/pivotalcf/2-3/devguide/deploy-apps/ssh-services.html#ssh-tunnel).
+    
+1. Configure a connection in your desktop tool using the values for `hostname`, `name, `password`
+`port`, and `username` that you recorded in the above step. 
 
 ## <a id="example-app"></a>Example App
 
